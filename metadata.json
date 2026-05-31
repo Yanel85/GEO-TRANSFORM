@@ -1,0 +1,6 @@
+{
+  "name": "Shapefile to WeChat GeoJSON (GCJ-02) Converter",
+  "description": "Shapefile ⇄ GeoJSON (GCJ-02) 转换压缩工具，支持 WGS-84/CGCS2000 坐标纠偏与在线压缩，支持实时矢量图层精细预览和 AI 诊断优化。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
