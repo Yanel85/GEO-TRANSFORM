@@ -246,8 +246,16 @@ export default function ConverterPage() {
 
   function finalizeProcessing(wgs84Data: any) {
     // 2. Douglas-Peucker Simplification
-    // Map slider 0-100 to degree scale tolerance squared range safely
-    const tolerance = (simplifyValue / 100) * 0.001; // Max 0.001 degrees corresponds to ~110 meters
+    // Map slider 0-100 to an adaptive tolerance based on the dataset's maximum bounding box span.
+    // This allows compression to scale correctly whether the data coordinates are in degrees or meters
+    // and whether it's a small parcel or a large province.
+    const bbox = calculateBBox(wgs84Data);
+    const dx = Math.abs(bbox[2] - bbox[0]);
+    const dy = Math.abs(bbox[3] - bbox[1]);
+    const maxSpan = Math.max(dx, dy);
+    
+    // Proportional tolerance: Map max 100% slider to 1.5% of the bounding box span
+    const tolerance = (simplifyValue / 100) * Math.max(maxSpan, 0.0001) * 0.015;
 
     let geomData = JSON.parse(JSON.stringify(wgs84Data));
 

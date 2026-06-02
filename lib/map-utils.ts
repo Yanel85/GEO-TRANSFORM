@@ -127,7 +127,12 @@ export function simplifyGeometry(geom: any, tolerance: number): any {
     return {
       ...geom,
       coordinates: geom.coordinates.map((ring: any) => {
-        const simplified = simplifyDouglasPeucker(ring, tolerance);
+        let currentTol = tolerance;
+        let simplified = simplifyDouglasPeucker(ring, currentTol);
+        for (let attempt = 0; attempt < 6 && simplified.length < 4; attempt++) {
+          currentTol *= 0.5;
+          simplified = simplifyDouglasPeucker(ring, currentTol);
+        }
         if (simplified.length < 4) {
           return ring; // Retain original if DP collapses it below 4 points (closed ring minimum)
         }
@@ -139,7 +144,12 @@ export function simplifyGeometry(geom: any, tolerance: number): any {
       ...geom,
       coordinates: geom.coordinates.map((poly: any) =>
         poly.map((ring: any) => {
-          const simplified = simplifyDouglasPeucker(ring, tolerance);
+          let currentTol = tolerance;
+          let simplified = simplifyDouglasPeucker(ring, currentTol);
+          for (let attempt = 0; attempt < 6 && simplified.length < 4; attempt++) {
+            currentTol *= 0.5;
+            simplified = simplifyDouglasPeucker(ring, currentTol);
+          }
           if (simplified.length < 4) {
             return ring;
           }
