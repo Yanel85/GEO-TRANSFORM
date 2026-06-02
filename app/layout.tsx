@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Shapefile to WeChat GeoJSON (GCJ-02) Converter',
+  title: 'Shapefile to GeoJSON (GCJ-02) Converter',
   description: 'A high-performance offline GIS tool that converts Shapefile maps to simplified GeoJSON in GCJ-02 reference system, with real-time vector preview.',
 };
 
